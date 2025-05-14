@@ -1,37 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% block title %}
+代辦事項
+{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TodoList</title>
-    <style>
-        body {
-            text-align: center;
-        }
-    </style>
-</head>
+{% block content %}
 
-<body>
-    {{user.username}}
-    {{user.email}}
-    <h1>代辦事項</h1>
-    <hr>
-    {% for todo in todos %}
-    <small>{{todo.created}}</small>
-    <h1>{{todo.id}}</h1>
-    <h2>
-        <a href="{% url 'viewtodo' todo.id %}">{{todo.title}}</a>
-    </h2>
-    {% if todo.text %}
-    <li>{{todo.text}}</li>
-    {% endif %}
-    {% if todo.important %}
-    <p style="color: red;">重要</p>
-    {% endif %}
-    <hr>
+<h1>代辦事項</h1>
+<hr>
+{% for todo in todos %}
+<small>{{todo.created}}</small>
+<h1>{{todo.id}}</h1>
+<h2>
+    <a href="{% url 'viewtodo' todo.id %}">{{todo.title}}</a>
+</h2>
+{% if todo.text %}
+<li>{{todo.text}}</li>
+{% endif %}
+{% if todo.important %}
+<p style="color: red;">重要</p>
+{% endif %}
+<hr>
 
-    {% endfor %}
-</body>
-
-</html>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <style>
+        input {
+            text-align: center;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        #nav-bar {
+
+            background-color: aliceblue;
+            padding: 12px;
+            text-align: left;
+        }
+    </style>
+    <title>
+        {% block title %}
+        {% endblock %}
+
+    </title>
+</head>
+
+<body>
+    <div id="nav-bar">
+        {% if user.is_authenticated %}
+        Login:{{user.username}}
+        <a href="{% url 'logout' %}">logout</a>
+        {% else %}
+        <a href="{% url 'login' %}">登入 </a>
+        <a href="{% url 'register'%}"> 註冊 </a>
+        {% endif %}
+    </div>
+    {% block content %}
+    {% endblock %}
+</body>
+
+</html>
