@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 
 
-# Create your views here.
 def user_logout(request):
     logout(request)
     return redirect("todolist")
@@ -16,13 +15,12 @@ def user_login(request):
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
-        print(username, password)
         user = authenticate(request, username=username, password=password)
         if not user:
-            message = "帳號或密碼錯誤"
+            message = "帳號或密碼錯誤!"
         else:
             login(request, user)
-            message = "登錄成功"
+            message = "登入成功!"
             return redirect("todolist")
 
     return render(
@@ -30,6 +28,7 @@ def user_login(request):
     )
 
 
+# Create your views here.
 def user_register(request):
     message = ""
     if request.method == "POST":
@@ -37,19 +36,22 @@ def user_register(request):
         username = request.POST.get("username")
         password1 = request.POST.get("password1")
         password2 = request.POST.get("password2")
-        print(username, password1, password2)
+
         if password1 != password2:
-            message = "兩次密碼不一致"
-        elif len(password2) < 8:
+            message = "兩次密碼不相同!"
+        elif len(password1) < 8:
             message = "密碼過短"
         else:
+            # 使用者是否存在
             user = User.objects.filter(username=username)
             if user:
-                message = "使用者已存在"
+                message = "使用者已存在!"
             else:
                 user = User.objects.create_user(username=username, password=password1)
                 user.save()
-                message = "註冊成功"
+                message = "註冊成功~!"
+                return redirect("login")
     else:
         form = UserCreationForm()
+
     return render(request, "user/register.html", {"form": form, "message": message})
