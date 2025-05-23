@@ -9,7 +9,15 @@ def todolist(request):
     user = request.user
     todos = None
     if user.is_authenticated:
+        filter_params = request.GET.get("filter")
+
         todos = Todo.objects.filter(user=request.user).order_by("-created")
+        if filter_params == "important":
+            todos = todos.filter(important=True)
+        elif filter_params == "pending":
+            todos = todos.filter(completed=False)
+        elif filter_params == "completed":
+            todos = todos.filter(completed=True)
 
     print(todos)
     result = {"todos": todos, "user": user}
