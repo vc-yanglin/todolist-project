@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import pymysql
+import os
+from dotenv import load_dotenv
+
 
 pymysql.install_as_MySQLdb()
 
@@ -23,12 +26,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-c*mr-(1&_sd!n$q&p$(-tq!al$lv0q(@01p(_7etf*_)yn0^=r"
+
+load_dotenv(BASE_DIR / ".env")
+
+SECRET_KEY = os.environ.get("DJANGO_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["todolist-project-9ocj.onrender.com"]
 
 
 # Application definition
@@ -96,14 +102,15 @@ DATABASES = {
     }
 }
 
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "defaultdb",
-        "USER": "avnadmin",
-        "PASSWORD": "AVNS_dr2_k26hcVwBhI9zFoU",
-        "HOST": "mysql-f88981d-victor-5afc.l.aivencloud.com",
-        "PORT": 27058,
+        "NAME": os.environ.get("DB_NAME"),
+        "USER": os.environ.get("DB_USER"),
+        "PASSWORD": os.environ.get("DB_PASSWORD"),
+        "HOST": os.environ.get("DB_HOST"),
+        "PORT": os.environ.get("PORT"),
     }
 }
 
